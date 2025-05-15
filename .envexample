@@ -1,0 +1,7 @@
+# .env.example
+
+PG_USER=postgres            # Namn på din databas-användare
+PG_PASSWORD=12345           # Lösenord till databasen
+PG_DATABASE=projekt1234     # Namn på själva databasen (OBS: inte "DATABAS")
+PG_PORT=4444                # Port din databas kör på
+PG_HOST=localhost           # Adress där PostgreSQL finns (localhost = din dator)
