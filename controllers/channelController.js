@@ -6,9 +6,7 @@ export const createChannel = async (req, res) => {
       .status(400)
       .json({ success: false, message: "name och owner_id måste anges" });
   }
-  //   if ()
 
-  // felmeddelande tillbaka om channelname redan finns!
   try {
     const insertedChannel = await insertChannelToDb(name, owner_id);
 
