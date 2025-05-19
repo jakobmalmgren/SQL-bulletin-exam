@@ -1,27 +1,24 @@
-import pool from "../db.js";
+import { isSubscribed, insertMessage } from "../models/messageModel.js";
 
 export const createMessage = async (req, res) => {
-    const { content, user_id, channel_id } = req.body
+  const { content, user_id, channel_id } = req.body;
 
-    try {
-        // kontrollera om prenumeration finns
-        const subRes = await pool.query(
-            "SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
-            [user_id, channel_id]
-        )
-        if (subRes.rows.length === 0) {
-            return res.status(403).json({ message: "Användaren är inte medlem i kanalen"})
-        }
-        // skapa meddelandet
-        const result = await pool.query(
-            `INSERT INTO messages (content, user_id, channel_id)
-            VALUES ($1 , $2, $3)
-            RETURNING *`,
-            [content, user_id, channel_id]
-        )
-        res.status(201).json(result.rows[0])
-    } catch (error) {
-        console.error("fel vid skapande av meddelande", error.message)
-        res.status(500).json({ error: "Server fel"})
+  if (!content || !user_id || !channel_id) {
+    return res.status(400).json({ message: "Alla fält måste fyllas i" });
+  }
+
+  try {
+    const subscribed = await isSubscribed(user_id, channel_id);
+
+    if (!subscribed) {
+      return res.status(403).json({ message: "Användaren är inte medlem i kanalen" });
     }
-}
+
+    const message = await insertMessage(content, user_id, channel_id);
+    res.status(201).json(message);
+
+  } catch (error) {
+    console.error("Fel vid skapande av meddelande:", error.message);
+    res.status(500).json({ error: "Serverfel" });
+  }
+};
