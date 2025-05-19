@@ -1,4 +1,5 @@
-import { isSubscribed, insertMessage } from "../models/messageModel.js";
+import { insertMessage } from "../models/messageModel.js";
+import { isSubscribed } from "../models/subscriptionModel.js";
 
 export const createMessage = async (req, res) => {
   const { content, user_id, channel_id } = req.body;
