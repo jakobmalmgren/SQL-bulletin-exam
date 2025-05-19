@@ -10,7 +10,7 @@ export const createSubscription = async (req, res) => {
   try {
     const subscribed = await isSubscribed(user_id, channel_id);
 
-    if (!subscribed) {
+    if (subscribed) {
       return res.status(403).json({ message: "Användaren är redan medlem" });
     }
 
