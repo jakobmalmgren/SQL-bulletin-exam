@@ -1,7 +1,7 @@
 import pool from "../db.js";
 
 // Kontrollera prenumeration
-export async function isSubscribed(userId, channelId) {
+export const isSubscribed = async (userId, channelId) => {
   const result = await pool.query(
     "SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
     [userId, channelId]
@@ -10,7 +10,7 @@ export async function isSubscribed(userId, channelId) {
 }
 
 // Skapa meddelande
-export async function insertMessage(content, userId, channelId) {
+export const insertMessage = async (content, userId, channelId) => {
   const result = await pool.query(
     `INSERT INTO messages (content, user_id, channel_id)
      VALUES ($1, $2, $3)
@@ -21,7 +21,7 @@ export async function insertMessage(content, userId, channelId) {
 }
 
 // updatera/redigera befintligt meddelande
-export async function UpdateMessageContent(id, newContent) {
+export const UpdateMessageContent = async (id, newContent) => {
     const result = await pool.query(
         `UPDATE messages
         SET content = $1
@@ -31,3 +31,4 @@ export async function UpdateMessageContent(id, newContent) {
     )
     return result.rows[0]
 }
+
