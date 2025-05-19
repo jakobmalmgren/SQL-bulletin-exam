@@ -1,14 +1,5 @@
 import pool from "../db.js";
 
-// Kontrollera prenumeration
-export async function isSubscribed(userId, channelId) {
-  const result = await pool.query(
-    "SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
-    [userId, channelId]
-  );
-  return result.rows.length > 0;
-}
-
 // Skapa meddelande
 export async function insertMessage(content, userId, channelId) {
   const result = await pool.query(
