@@ -11,6 +11,19 @@ import pool from "./db.js";
 //   host: process.env.PG_HOST,
 // });
 
+// TTÄNKA PÅ:
+// ÄNDRA OM VISSA TTTABLES...
+
+// INDEXES....
+//KOLLA   CONSTRAINT fk_owner FOREIGN KEY (owner_id) REFERENCES users(id)
+
+// Funderingar:
+// Kan en användare vara med i flera kanaler?
+// Kan en användare skapa flera kanaler?
+// Kan ett meddelande ligga i flera kanaler (eller bara en)?
+// Hur ser relationen ut mellan användare och meddelanden?
+// Hur ser relationen ut mellan meddelanden och kanaler?
+
 async function setupDb() {
   const client = await pool.connect();
   try {
