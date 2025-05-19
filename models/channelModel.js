@@ -9,7 +9,8 @@ const insertChannelToDb = async (name, owner_id) => {
     console.log("inserrrrrrt", createdChannelDb.rows[0]);
     return createdChannelDb.rows[0];
   } catch (error) {
-    console.log(error);
+    console.error("Fel i insertChannelToDb:", error); // för felsökning
+    throw error; // 👈 Skicka vidare exakt felobjektet (inte nytt Erro
   }
 };
 
