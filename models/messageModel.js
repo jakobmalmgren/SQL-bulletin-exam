@@ -21,7 +21,7 @@ export const insertMessage = async (content, userId, channelId) => {
 }
 
 // updatera/redigera befintligt meddelande
-export const UpdateMessageContent = async (id, newContent) => {
+export const updateMessageContent = async (id, newContent) => {
     const result = await pool.query(
         `UPDATE messages
         SET content = $1
