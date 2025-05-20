@@ -25,3 +25,17 @@ export async function addSubscription(userId, channelId) {
     throw error; 
   }
 }
+// Lägg till en prenumeration: Användare blir medlem i en kanal
+export async function removeSubscription(userId, channelId) {
+  try {
+    await pool.query(
+      `DELETE FROM subscriptions WHERE user_id = $1 AND channel_id = $2`,
+      [userId, channelId]
+    );
+
+    return "Subscription removed"; // Returnera den tillagda prenumerationen
+  } catch (error) {
+    console.log('Error adding subscription:', error);
+    throw error; 
+  }
+}
