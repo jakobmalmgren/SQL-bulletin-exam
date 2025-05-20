@@ -1,4 +1,4 @@
-import { insertMessage } from "../models/messageModel.js";
+import { insertMessage, updateMessageContent } from "../models/messageModel.js";
 import { isSubscribed } from "../models/subscriptionModel.js";
 
 export const createMessage = async (req, res) => {
@@ -24,3 +24,25 @@ export const createMessage = async (req, res) => {
     res.status(500).json({ error: "Serverfel" });
   }
 };
+
+export const updateMessage = async (req, res) => {
+    const { id } = req.params // id:t måste skickas med i url
+    const { content } = req.body
+
+    if(!content) {
+        return res.status(400).json({ message: "Innehål krävs för att uppdatera/redigera meddelandet"})
+    }
+
+    try {
+        const updated = await updateMessageContent(id, content)
+
+        if(!updated) {
+            return res.status(404).json({ message: "Meddelandet hittades inte"})
+        }
+
+        res.status(200).json(updated)
+    } catch (error) {
+        console.error("Fel vid uppdatering", error.message)
+        res.status(500).json({ error: "Serverfel vid uppdatering"})
+    }
+}

@@ -12,6 +12,6 @@ app.use("/api/subscriptions", subscriptionRoutes);
 app.use("/api/messages", messageRoutes); 
 app.use("/api/users", userRoutes)
 
-app.listen(5000, () => {
+app.listen(6000, () => {
   console.log(`servern körs på http://localhost:5000`);
 });
