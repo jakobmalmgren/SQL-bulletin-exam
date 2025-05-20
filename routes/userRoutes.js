@@ -1,5 +1,5 @@
 import express from 'express'
-import { createUserController } from '../controllers/userController.js'
+import { createUserController, getUserChannels } from '../controllers/userController.js'
 
 const router = express.Router()
 
@@ -7,3 +7,6 @@ const router = express.Router()
 router.post("/", createUserController)
 
 export default router
+
+// GET
+router.get("/:id/channels", getUserChannels)
