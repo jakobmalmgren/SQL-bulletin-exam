@@ -1,15 +1,12 @@
-
-import insertChannelToDb, {
+// import { findAndDeleteChannel } from "../models/channelModel.js";
+import { findMessage } from "../models/messageModel.js";
+import {
+  insertChannelToDb,
   findAndDeleteChannel,
-  findMessage,
+  updateChannelNameIfOwner,
 } from "../models/channelModel.js";
 
 //skapa en kanal
-
-import {insertChannelToDb, updateChannelNameIfOwner } from "../models/channelModel.js";
-
-
-
 export const createChannel = async (req, res) => {
   const { name, owner_id } = req.body;
   if (!name || !owner_id) {
@@ -39,7 +36,6 @@ export const createChannel = async (req, res) => {
     });
   }
 };
-
 
 //hämta specifika meddelanden från en viss channel
 
@@ -94,33 +90,35 @@ export const deleteChannel = async (req, res) => {
 };
 
 export const patchChannelName = async (req, res) => {
-  const { id } = req.params
-  const { name, user_id } = req.body
+  const { id } = req.params;
+  const { name, user_id } = req.body;
 
-  if(!name || !user_id) {
-    return res.status(400).json({ success: false, message: "name och user_id måste anges"})
+  if (!name || !user_id) {
+    return res
+      .status(400)
+      .json({ success: false, message: "name och user_id måste anges" });
   }
 
   try {
-    const updatedChannel = await updateChannelNameIfOwner(id, name, user_id)
+    const updatedChannel = await updateChannelNameIfOwner(id, name, user_id);
 
-      res.status(200).json({
-        success: true,
-        message: "kanalnamnet har uppdaterats",
-        data: updatedChannel,
-      })
+    res.status(200).json({
+      success: true,
+      message: "kanalnamnet har uppdaterats",
+      data: updatedChannel,
+    });
   } catch (error) {
     if (error.message === "Du är inte ägaren av kanalen") {
       return res.status(403).json({
         success: false,
-        message: "Endast kanalens ägare får ändra namn"
-      })
+        message: "Endast kanalens ägare får ändra namn",
+      });
     }
 
-    console.error("Fel vid uppdatering:", error)
+    console.error("Fel vid uppdatering:", error);
     res.status(500).json({
       success: false,
-      message: "Serverfel vid uppdatering"
-    })
+      message: "Serverfel vid uppdatering",
+    });
   }
-}
+};

@@ -16,7 +16,7 @@ export async function getChannelsForUser (userId) {
   return result.rows;
 }
 
-const insertChannelToDb = async (name, owner_id) => {
+// const insertChannelToDb = async (name, owner_id) => {
 
 export const insertChannelToDb = async (name, owner_id) => {
 
@@ -31,7 +31,7 @@ export const insertChannelToDb = async (name, owner_id) => {
     console.error("Fel i insertChannelToDb:", error); // för felsökning
     throw error; // 👈 Skicka vidare exakt felobjektet (inte nytt Erro
   }
-};
+}
  // Uppdatera kanalnam om användaren är owner
 export const updateChannelNameIfOwner = async (newName, channel_id, user_id) => {
   const result = await pool.query(
@@ -50,17 +50,17 @@ export const updateChannelNameIfOwner = async (newName, channel_id, user_id) => 
 
 
 // NY ...SKA IN I MESSAGE MODELS!!!!!!!!!!!!
-export const findMessage = async (channel_id) => {
-  try {
-    const messageContent = await pool.query(
-      "SELECT content FROM messages WHERE channel_id=$1",
-      [channel_id]
-    );
-    return messageContent.rows;
-  } catch (error) {
-    console.error("Fel vid hämtning av meddelande:", error);
-  }
-};
+// export const findMessage = async (channel_id) => {
+//   try {
+//     const messageContent = await pool.query(
+//       "SELECT content FROM messages WHERE channel_id=$1",
+//       [channel_id]
+//     );
+//     return messageContent.rows;
+//   } catch (error) {
+//     console.error("Fel vid hämtning av meddelande:", error);
+//   }
+// };
 
 // delete funktion som hittar channel ID och deletar de
 export const findAndDeleteChannel = async (id) => {
