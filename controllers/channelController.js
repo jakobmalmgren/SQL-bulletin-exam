@@ -91,16 +91,23 @@ export const deleteChannel = async (req, res) => {
 
 export const patchChannelName = async (req, res) => {
   const { id } = req.params;
-  const { name, user_id } = req.body;
+  // const { name, user_id } = req.body;
+  const { name } = req.body;
 
-  if (!name || !user_id) {
+  // if (!name || !user_id) {
+  //   return res
+  //     .status(400)
+  //     .json({ success: false, message: "name och user_id måste anges" });
+  // }
+  if (!name) {
     return res
       .status(400)
       .json({ success: false, message: "name och user_id måste anges" });
   }
 
   try {
-    const updatedChannel = await updateChannelNameIfOwner(id, name, user_id);
+    // const updatedChannel = await updateChannelNameIfOwner(id, name, user_id);
+    const updatedChannel = await updateChannelNameIfOwner(id, name);
 
     res.status(200).json({
       success: true,

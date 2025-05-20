@@ -8,10 +8,10 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/channels", channelRoutes);
-app.use("/api/subscriptions", subscriptionRoutes); 
-app.use("/api/messages", messageRoutes); 
-app.use("/api/users", userRoutes)
+app.use("/api/subscriptions", subscriptionRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(6000, () => {
-  console.log(`servern körs på http://localhost:5000`);
+  console.log(`servern körs på http://localhost:6000`);
 });

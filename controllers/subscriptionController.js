@@ -1,5 +1,8 @@
-import { isSubscribed, addSubscription, removeSubscription } from "../models/subscriptionModel.js";
-
+import {
+  isSubscribed,
+  addSubscription,
+  removeSubscription,
+} from "../models/subscriptionModel.js";
 
 // Skapa prenumeration
 
@@ -18,14 +21,12 @@ export const createSubscription = async (req, res) => {
     }
 
     const message = await addSubscription(user_id, channel_id);
-    res.status(201).json(message);  // 201 (CREATED)
-
+    res.status(201).json(message); // 201 (CREATED)
   } catch (error) {
     console.error("Fel vid skapande av prenumeration:", error.message);
     res.status(500).json({ error: "Serverfel" });
   }
 };
-
 
 export const deleteSubscription = async (req, res) => {
   const { userId, channelId } = req.params;
@@ -35,16 +36,19 @@ export const deleteSubscription = async (req, res) => {
   }
 
   try {
-    
     const subscribed = await isSubscribed(userId, channelId);
     if (!subscribed) {
-      return res.status(404).json({ message: "Ingen prenumeration finns för dessa värden" });
+      return res
+        .status(404)
+        .json({ message: "Ingen prenumeration finns för dessa värden" });
     }
 
     // Ta bort prenumerationen
     const message = await removeSubscription(userId, channelId);
 
-    res.status(200).json({ message: "Prenumerationen är borttagen" });  // 200 (OK)
+    // använder inte message...kolla upp!
+
+    res.status(200).json({ message: "Prenumerationen är borttagen" }); // 200 (OK)
   } catch (error) {
     console.error("Fel vid borttagning av prenumeration:", error.message);
     res.status(500).json({ error: "Serverfel" });

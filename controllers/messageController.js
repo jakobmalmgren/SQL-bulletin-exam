@@ -26,23 +26,26 @@ export const createMessage = async (req, res) => {
 };
 
 export const updateMessage = async (req, res) => {
-    const { id } = req.params // id:t måste skickas med i url
-    const { content } = req.body
+  // PK - ID:t
+  const { id } = req.params; // id:t måste skickas med i url
+  const { content } = req.body;
 
-    if(!content) {
-        return res.status(400).json({ message: "Innehål krävs för att uppdatera/redigera meddelandet"})
+  if (!content) {
+    return res.status(400).json({
+      message: "Innehål krävs för att uppdatera/redigera meddelandet",
+    });
+  }
+
+  try {
+    const updated = await updateMessageContent(id, content);
+
+    if (!updated) {
+      return res.status(404).json({ message: "Meddelandet hittades inte" });
     }
 
-    try {
-        const updated = await updateMessageContent(id, content)
-
-        if(!updated) {
-            return res.status(404).json({ message: "Meddelandet hittades inte"})
-        }
-
-        res.status(200).json(updated)
-    } catch (error) {
-        console.error("Fel vid uppdatering", error.message)
-        res.status(500).json({ error: "Serverfel vid uppdatering"})
-    }
-}
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error("Fel vid uppdatering", error.message);
+    res.status(500).json({ error: "Serverfel vid uppdatering" });
+  }
+};
