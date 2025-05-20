@@ -14,4 +14,30 @@ const insertChannelToDb = async (name, owner_id) => {
   }
 };
 
+// NY ...SKA IN I MESSAGE MODELS!!!!!!!!!!!!
+export const findMessage = async (channel_id) => {
+  try {
+    const messageContent = await pool.query(
+      "SELECT content FROM messages WHERE channel_id=$1",
+      [channel_id]
+    );
+    return messageContent.rows;
+  } catch (error) {
+    console.error("Fel vid hämtning av meddelande:", error);
+  }
+};
+
+// delete funktion som hittar channel ID och deletar de
+export const findAndDeleteChannel = async (id) => {
+  try {
+    const channel = await pool.query(
+      "DELETE FROM channels WHERE id=$1 RETURNING *",
+      [id]
+    );
+    return channel.rows;
+  } catch (error) {
+    console.error("Hittades inte channel att deleta:", error);
+  }
+};
+
 export default insertChannelToDb;
