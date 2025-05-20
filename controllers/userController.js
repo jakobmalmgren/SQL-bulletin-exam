@@ -31,7 +31,7 @@ export async function createUserController(req, res) {
 
 //Hämta användarens kanaler
 export async function getUserChannels (req, res) {
-    const userId = req.params.userId
+    const userId = req.params.id
 
     try {
         const channels = await getChannelsForUser(userId)
