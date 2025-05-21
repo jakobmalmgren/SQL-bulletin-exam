@@ -38,7 +38,6 @@ export const createChannel = async (req, res) => {
   }
 };
 
-
 export const getSpecifikMessages = async (req, res) => {
   const { id: channelId } = req.params;
   const userId = parseInt(req.query.userId); // 👈 Hämta userId från query
@@ -79,7 +78,8 @@ export const getSpecifikMessages = async (req, res) => {
     // Om meddelanden finns
     res.status(200).json({
       success: true,
-      message: "Hämtning av meddelanden lyckades",
+      // skapa join?
+      message: `hämtning av meddelanden lyckades för kanalen me id ${channelId}`,
       messages,
     });
   } catch (error) {

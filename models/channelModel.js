@@ -45,6 +45,23 @@ export const insertChannelToDb = async (name, owner_id) => {
 //   return result.rows[0]
 // }
 export const updateChannelNameIfOwner = async (id, newName) => {
+  //check här..:
+  // även
+
+  // const checkIfOwner = await pool.query(
+  //   "SELECT * FROM channels WHERE id = $1 AND owner_id = $2",
+  //   [id, owner_id] // owner_id måste komma from body sen i
+  //   //  patchChannelName  funktionen i channelcontrollern
+  //   // gör de ihop imorn! eller få in en middleware?
+  // );
+
+  // if (checkIfOwner.rows.length === 0) {
+  //   return res.status(403).json({
+  //     success: false,
+  //     message: "Endast kanalens ägare har tillgång",
+  //   });
+  // }
+  //sen även ta väck if där nere..
   const result = await pool.query(
     `UPDATE channels
     SET name = $1
