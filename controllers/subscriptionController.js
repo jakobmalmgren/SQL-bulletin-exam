@@ -17,17 +17,18 @@ export const createSubscription = async (req, res) => {
     const subscribed = await isSubscribed(user_id, channel_id);
 
     if (subscribed) {
-      return res.status(403).json({ message: "Användaren är redan medlem" });
+      return res.status(409).json({ message: "Användaren är redan medlem" });
     }
 
     const message = await addSubscription(user_id, channel_id);
-    res.status(201).json(message); // 201 (CREATED)
+    res.status(201).json({ message:"Prenumeration skapad!", success: true }); // 201 (CREATED)
   } catch (error) {
     console.error("Fel vid skapande av prenumeration:", error.message);
-    res.status(500).json({ error: "Serverfel" });
+    res.status(400).json({ error: "Fel vid skapande av prenumeration" });
   }
 };
 
+// Tar emot och raderar en delete-request
 export const deleteSubscription = async (req, res) => {
   const { userId, channelId } = req.params;
 
@@ -44,10 +45,9 @@ export const deleteSubscription = async (req, res) => {
     }
 
     // Ta bort prenumerationen
-    const message = await removeSubscription(userId, channelId);
+   await removeSubscription(userId, channelId);
 
-    // använder inte message...kolla upp!
-
+  
     res.status(200).json({ message: "Prenumerationen är borttagen" }); // 200 (OK)
   } catch (error) {
     console.error("Fel vid borttagning av prenumeration:", error.message);

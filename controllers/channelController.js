@@ -79,7 +79,7 @@ export const getSpecifikMessages = async (req, res) => {
     res.status(200).json({
       success: true,
       // skapa join?
-      message: `hämtning av meddelanden lyckades för kanalen me id ${channelId}`,
+      message: `hämtning av meddelanden lyckades för kanalen med id ${channelId}`,
       messages,
     });
   } catch (error) {

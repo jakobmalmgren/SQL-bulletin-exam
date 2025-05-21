@@ -18,7 +18,7 @@ export const createMessage = async (req, res) => {
     }
 
     const message = await insertMessage(content, user_id, channel_id);
-    res.status(201).json(message);
+    res.status(201).json({ message: "Meddelande skapat!", success: true, data:message });
   } catch (error) {
     console.error("Fel vid skapande av meddelande:", error.message);
     res.status(500).json({ error: "Serverfel" });
@@ -32,7 +32,7 @@ export const updateMessage = async (req, res) => {
 
   if (!content) {
     return res.status(400).json({
-      message: "Innehål krävs för att uppdatera/redigera meddelandet",
+      message: "Innehåll krävs för att uppdatera/redigera meddelandet",
     });
   }
 
@@ -43,7 +43,7 @@ export const updateMessage = async (req, res) => {
       return res.status(404).json({ message: "Meddelandet hittades inte" });
     }
 
-    res.status(200).json(updated);
+    res.status(200).json({ message: "Meddelande uppdaterat!", success: true, data:updated});
   } catch (error) {
     console.error("Fel vid uppdatering", error.message);
     res.status(500).json({ error: "Serverfel vid uppdatering" });

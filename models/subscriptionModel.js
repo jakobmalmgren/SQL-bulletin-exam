@@ -19,6 +19,9 @@ export async function addSubscription(userId, channelId) {
        RETURNING *`,
       [userId, channelId]
     );
+
+    console.log('Subscription succeeded'); 
+
     return result.rows[0]; // Returnera den tillagda prenumerationen
   } catch (error) {
     console.log('Error adding subscription:', error);
