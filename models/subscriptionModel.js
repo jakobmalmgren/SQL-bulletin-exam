@@ -3,12 +3,12 @@ import pool from "../db.js";
 
 // Kontrollera prenumeration
 export async function isSubscribed(userId, channelId) {
-    const result = await pool.query(
-      "SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
-      [userId, channelId]
-    );
-    return result.rows.length > 0;
-  }
+  const result = await pool.query(
+    "SELECT * FROM subscriptions WHERE user_id = $1 AND channel_id = $2",
+    [userId, channelId]
+  );
+  return result.rows.length > 0;
+}
 
 // Lägg till en prenumeration: Användare blir medlem i en kanal
 export async function addSubscription(userId, channelId) {
@@ -20,15 +20,15 @@ export async function addSubscription(userId, channelId) {
       [userId, channelId]
     );
 
-    console.log('Subscription succeeded'); 
+    console.log('Subscription succeeded');
 
     return result.rows[0]; // Returnera den tillagda prenumerationen
   } catch (error) {
     console.log('Error adding subscription:', error);
-    throw error; 
+    throw error;
   }
 }
-// Lägg till en prenumeration: Användare blir medlem i en kanal
+// Radera en prenumeration
 export async function removeSubscription(userId, channelId) {
   try {
     await pool.query(
@@ -36,9 +36,9 @@ export async function removeSubscription(userId, channelId) {
       [userId, channelId]
     );
 
-    return "Subscription removed"; // Returnera den tillagda prenumerationen
+    return "Subscription removed";
   } catch (error) {
     console.log('Error adding subscription:', error);
-    throw error; 
+    throw error;
   }
 }

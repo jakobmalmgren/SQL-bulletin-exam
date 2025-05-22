@@ -1,35 +1,11 @@
-// import { Pool } from "pg";
-// import dotenv from "dotenv";
-// dotenv.config();
 import pool from "./db.js";
-
-// const pool = new Pool({
-//   user: process.env.PG_USER,
-//   password: process.env.PG_PASSWORD,
-//   database: process.env.PG_DATABASE,
-//   port: process.env.PG_PORT,
-//   host: process.env.PG_HOST,
-// });
-
-// TTÄNKA PÅ:
-// ÄNDRA OM VISSA TTTABLES...
-
-// INDEXES....
-//KOLLA   CONSTRAINT fk_owner FOREIGN KEY (owner_id) REFERENCES users(id)
-
-// Funderingar:
-// Kan en användare vara med i flera kanaler?
-// Kan en användare skapa flera kanaler?
-// Kan ett meddelande ligga i flera kanaler (eller bara en)?
-// Hur ser relationen ut mellan användare och meddelanden?
-// Hur ser relationen ut mellan meddelanden och kanaler?
 
 async function setupDb() {
   const client = await pool.connect();
   try {
     await client.query("BEGIN");
 
-    //users table
+    // Users table
     await client.query(`
         CREATE TABLE IF NOT EXISTS "users" (
   "id" SERIAL PRIMARY KEY,
@@ -37,7 +13,7 @@ async function setupDb() {
   "email" varchar(100) UNIQUE NOT NULL
 )
         `);
-    //channels table
+    // Channels table
     await client.query(`
 CREATE TABLE IF NOT EXISTS "channels" (
   "id" SERIAL PRIMARY KEY,
@@ -47,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "channels" (
   FOREIGN KEY ("owner_id") REFERENCES "users" ("id") ON DELETE CASCADE
 )
             `);
-    //messages table
+    // Messages table
     await client.query(`
 CREATE TABLE IF NOT EXISTS "messages" (
   "id" SERIAL PRIMARY KEY,

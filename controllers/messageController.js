@@ -1,6 +1,7 @@
 import { insertMessage, updateMessageContent } from "../models/messageModel.js";
 import { isSubscribed } from "../models/subscriptionModel.js";
 
+// Skapa meddelande
 export const createMessage = async (req, res) => {
   const { content, user_id, channel_id } = req.body;
 
@@ -18,13 +19,14 @@ export const createMessage = async (req, res) => {
     }
 
     const message = await insertMessage(content, user_id, channel_id);
-    res.status(201).json({ message: "Meddelande skapat!", success: true, data:message });
+    res.status(201).json({ message: "Meddelande skapat!", success: true, data: message });
   } catch (error) {
     console.error("Fel vid skapande av meddelande:", error.message);
     res.status(500).json({ error: "Serverfel" });
   }
 };
 
+// Uppdatera meddelande
 export const updateMessage = async (req, res) => {
   // PK - ID:t
   const { id } = req.params; // id:t måste skickas med i url
@@ -43,7 +45,7 @@ export const updateMessage = async (req, res) => {
       return res.status(404).json({ message: "Meddelandet hittades inte" });
     }
 
-    res.status(200).json({ message: "Meddelande uppdaterat!", success: true, data:updated});
+    res.status(200).json({ message: "Meddelande uppdaterat!", success: true, data: updated });
   } catch (error) {
     console.error("Fel vid uppdatering", error.message);
     res.status(500).json({ error: "Serverfel vid uppdatering" });

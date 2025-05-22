@@ -3,10 +3,7 @@ import { createUserController, getUserChannels } from '../controllers/userContro
 
 const router = express.Router()
 
-// POST
 router.post("/", createUserController)
+router.get("/:id/channels", getUserChannels)
 
 export default router
-
-// GET
-router.get("/:id/channels", getUserChannels)

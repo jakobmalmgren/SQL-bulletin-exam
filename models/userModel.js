@@ -1,5 +1,6 @@
 import pool from '../db.js'
 
+// Skapa användare
 export async function createUser(name, email) {
     const result = await pool.query(
         `INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *`,

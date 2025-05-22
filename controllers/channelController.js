@@ -1,4 +1,3 @@
-// import { findAndDeleteChannel } from "../models/channelModel.js";
 import { isSubscribed } from "../models/subscriptionModel.js";
 import { findMessage } from "../models/messageModel.js";
 import {
@@ -7,7 +6,7 @@ import {
   updateChannelNameIfOwner,
 } from "../models/channelModel.js";
 
-//skapa en kanal
+//Skapa en kanal
 export const createChannel = async (req, res) => {
   const { name, owner_id } = req.body;
   if (!name || !owner_id) {
@@ -38,9 +37,11 @@ export const createChannel = async (req, res) => {
   }
 };
 
+// Hämta specifika meddelande
+
 export const getSpecifikMessages = async (req, res) => {
   const { id: channelId } = req.params;
-  const userId = parseInt(req.query.userId); // 👈 Hämta userId från query
+  const userId = parseInt(req.query.userId); //  Hämta userId från query
 
   if (!channelId) {
     return res.status(400).json({
@@ -78,7 +79,6 @@ export const getSpecifikMessages = async (req, res) => {
     // Om meddelanden finns
     res.status(200).json({
       success: true,
-      // skapa join?
       message: `hämtning av meddelanden lyckades för kanalen med id ${channelId}`,
       messages,
     });
@@ -90,34 +90,8 @@ export const getSpecifikMessages = async (req, res) => {
     });
   }
 };
-//hämta specifika meddelanden från en viss channel
 
-/* export const getSpecifikMessages = async (req, res) => {
-  const { id } = req.params;
-  if (!id) {
-    return res.status(404).json({
-      message: "ingen channel_id i params och de krävs!",
-    });
-  }
-  try {
-    const messages = await findMessage(id);
-    console.log("Messages", messages);
-
-    res.status(200).json({
-      success: true,
-      message: "specifik sökning efter en viss kanal ID:s messages lyckades!",
-      data: `messages:`,
-      messages,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "specifik sökning efter en viss kanal ID:s misslyckades!!",
-    });
-  }
-}; */
-
-// deletar channels och skickar tillbaka res.
+// Raderar channels och skickar tillbaka res.
 
 export const deleteChannel = async (req, res) => {
   const { id } = req.params;
@@ -142,16 +116,11 @@ export const deleteChannel = async (req, res) => {
   }
 };
 
+// Uppdatera kanalnamn
 export const patchChannelName = async (req, res) => {
   const { id } = req.params;
-  // const { name, user_id } = req.body;
   const { name } = req.body;
 
-  // if (!name || !user_id) {
-  //   return res
-  //     .status(400)
-  //     .json({ success: false, message: "name och user_id måste anges" });
-  // }
   if (!name) {
     return res
       .status(400)
@@ -159,7 +128,7 @@ export const patchChannelName = async (req, res) => {
   }
 
   try {
-    // const updatedChannel = await updateChannelNameIfOwner(id, name, user_id);
+
     const updatedChannel = await updateChannelNameIfOwner(id, name);
 
     res.status(200).json({

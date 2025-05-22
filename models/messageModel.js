@@ -11,7 +11,7 @@ export async function insertMessage(content, userId, channelId) {
   return result.rows[0];
 }
 
-// updatera/redigera befintligt meddelande
+// Uppdatera/redigera befintligt meddelande
 export const updateMessageContent = async (id, newContent) => {
   const result = await pool.query(
     `UPDATE messages
@@ -23,11 +23,11 @@ export const updateMessageContent = async (id, newContent) => {
   return result.rows[0];
 };
 
+// Hämta meddelande från viss kanal
 export const findMessage = async (channel_id) => {
   try {
     const messageContent = await pool.query(
       "SELECT content FROM messages WHERE channel_id=$1",
-      // "SELECT* FROM messages WHERE channel_id = $1 ORDER BY created_at DESC",
       [channel_id]
     );
     return messageContent.rows;
