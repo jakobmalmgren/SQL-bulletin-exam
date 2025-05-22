@@ -27,6 +27,7 @@ export const findMessage = async (channel_id) => {
   try {
     const messageContent = await pool.query(
       "SELECT content FROM messages WHERE channel_id=$1",
+      // "SELECT* FROM messages WHERE channel_id = $1 ORDER BY created_at DESC",
       [channel_id]
     );
     return messageContent.rows;
